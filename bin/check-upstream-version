@@ -36,6 +36,14 @@ else
 	echo "----------------------------------------------------------------"
 fi
 
+# packages that are not in the repos must not be compared with the package of
+# the same name that is (Archlinux has its own glycin and libdecor)
+if [ -n "${NOT_IN_REPOS:-}" ]; then
+	echo "Not in the repos, skipping the upstream version check"
+	echo "----------------------------------------------------------------"
+	exit 0
+fi
+
 UPSTREAM_VERSION=$(pacman -Ss "^$PACKAGE$" | awk '{print $2; exit}' | sed 's/^[0-9]\+://')
 
 echo "UPSTREAM version: $UPSTREAM_VERSION"

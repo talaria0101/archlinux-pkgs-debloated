@@ -94,3 +94,7 @@ can lag behind Archlinux. The build is skipped when the versions differ, when
 there is no Archlinux tag for the version the port carries (the port uses its own
 pkgrel), or when the port does not carry the package. `FORCE_BUILD=2` builds
 anyway.
+
+Packages that are not in the repos (`glycin-mini`, `libdecor-mini`) set
+`NOT_IN_REPOS=1`. They are only skipped when their version is already released,
+and are not compared with the Archlinux package of the same name.
