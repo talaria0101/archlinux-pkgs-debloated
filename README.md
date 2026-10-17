@@ -95,6 +95,6 @@ there is no Archlinux tag for the version the port carries (the port uses its ow
 pkgrel), or when the port does not carry the package. `FORCE_BUILD=2` builds
 anyway.
 
-Packages that are not in the repos (`glycin-mini`, `libdecor-mini`) set
+Packages that are not in the repos (`glycin-mini`, `libdecor-mini`, `gtk2-mini`) set
 `NOT_IN_REPOS=1`. They are only skipped when their version is already released,
 and are not compared with the Archlinux package of the same name.
