@@ -29,6 +29,15 @@ sed -i \
 	-e 's/--enable-libglslang/--disable-vdpau/' \
 	"$PKGBUILD"
 
+# --enable-small makes ffmpeg drop the human readable codec names
+# (NULL_IF_CONFIG_SMALL in libavcodec/codec_desc.c) and the profile name tables
+# (libavcodec/profiles.c). Without them mpv based players (stats overlay, Cine)
+# show no codec and no "HW:" line, which looks like hardware decoding is off.
+# profiles.c has to be patched together with codec_desc.c, because codec_desc.c
+# refers to the ff_*_profiles tables and the link of the programs fails without
+# them.
+sed -i '/^prepare() {/,/^}/ s|^  cd ffmpeg$|&\n  sed -i "s/NULL_IF_CONFIG_SMALL(\\(.*\\)),\\$/\\1,/" libavcodec/codec_desc.c\n  sed -i "s/^#if !CONFIG_SMALL\\$/#if 1/" libavcodec/profiles.c|' "$PKGBUILD"
+
 cat "$PKGBUILD"
 
 # Do not build if version does not match with upstream
